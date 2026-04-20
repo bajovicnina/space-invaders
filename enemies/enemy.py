@@ -12,8 +12,13 @@ class Enemy:
         self.points = points
         self.enemy_type = enemy_type
 
-        self.image = pygame.image.load("assets/images/green_alien.png").convert_alpha()
-        self.image = pygame.transform.smoothscale(self.image, (110, 80))
+        # bira sliku po tipu enemyja
+        if self.enemy_type == "strong":
+            self.image = pygame.image.load("assets/images/enemy2.png").convert_alpha()
+            self.image = pygame.transform.smoothscale(self.image, (110, 80))
+        else:
+            self.image = pygame.image.load("assets/images/green_alien.png").convert_alpha()
+            self.image = pygame.transform.smoothscale(self.image, (110, 80))
 
         self.width = self.image.get_width()
         self.height = self.image.get_height()
@@ -32,7 +37,16 @@ class Enemy:
     def draw(self, screen):
         screen.blit(self.image, (self.x, self.y))
 
-          # === highlight za specijalne enemyje ===
+        # HP bar za enemyje koji se gadjaju vise puta
+        if self.max_hp > 1:
+            bar_width = self.width
+            bar_height = 8
+            fill_width = int((self.hp / self.max_hp) * bar_width)
+
+            pygame.draw.rect(screen, (60, 60, 60), (self.x, self.y - 12, bar_width, bar_height))
+            pygame.draw.rect(screen, (180, 80, 255), (self.x, self.y - 12, fill_width, bar_height))
+
+        # highlight za specijalne enemyje
         if self.enemy_type == "weapon":
             pygame.draw.rect(screen, (255, 220, 80), (self.x, self.y, self.width, self.height), 3)
 
@@ -44,3 +58,6 @@ class Enemy:
 
         elif self.enemy_type == "forbidden":
             pygame.draw.rect(screen, (255, 80, 80), (self.x, self.y, self.width, self.height), 3)
+
+        elif self.enemy_type == "strong":
+            pygame.draw.rect(screen, (170, 100, 255), (self.x, self.y, self.width, self.height), 3)
