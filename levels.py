@@ -7,136 +7,125 @@ LEVELS = {
         "enemy_shooting": False,
         "shoot_chance": 999999,
         "stronger_top_row": False,
-        "weapon_enemy": False,
-        "shield_enemy": False,
-        "forbidden_enemy": False,
-        "bonus_enemy": False,
-        "description": "Osnovni enemyji, učenje igre."
+        "strong_enemy_hp": 1,
+        "weapon_upgrade": False,
+        "description": "Only green enemies."
     },
+
     2: {
         "enemy_rows": 2,
-        "enemy_cols": 4,
+        "enemy_cols": 5,
         "enemy_speed": 0.22,
         "enemy_hp": 1,
         "enemy_shooting": True,
-        "shoot_chance": 650,
+        "shoot_chance": 900,
         "stronger_top_row": False,
-        "weapon_enemy": False,
-        "shield_enemy": True,
-        "forbidden_enemy": False,
-        "bonus_enemy": False,
-        "description": "Malo više pritiska, enemyji rijetko pucaju."
+        "strong_enemy_hp": 1,
+        "weapon_upgrade": False,
+        "description": "Green enemies can now shoot."
     },
+
     3: {
         "enemy_rows": 2,
-        "enemy_cols": 5,
-        "enemy_speed": 0.25,
+        "enemy_cols": 6,
+        "enemy_speed": 0.24,
+        "enemy_hp": 1,
+        "enemy_shooting": True,
+        "shoot_chance": 850,
+        "stronger_top_row": False,
+        "strong_enemy_hp": 1,
+        "weapon_upgrade": False,
+        "description": "Yellow enemies appear."
+    },
+
+    4: {
+        "enemy_rows": 3,
+        "enemy_cols": 6,
+        "enemy_speed": 0.26,
+        "enemy_hp": 1,
+        "enemy_shooting": True,
+        "shoot_chance": 800,
+        "stronger_top_row": False,
+        "strong_enemy_hp": 1,
+        "weapon_upgrade": False,
+        "description": "More yellow enemies."
+    },
+
+    5: {
+        "enemy_rows": 3,
+        "enemy_cols": 6,
+        "enemy_speed": 0.28,
+        "enemy_hp": 1,
+        "enemy_shooting": True,
+        "shoot_chance": 760,
+        "stronger_top_row": True,
+        "strong_enemy_hp": 2,
+        "weapon_upgrade": False,
+        "description": "Shielded enemies appear."
+    },
+
+    6: {
+        "enemy_rows": 3,
+        "enemy_cols": 6,
+        "enemy_speed": 0.30,
+        "enemy_hp": 1,
+        "enemy_shooting": True,
+        "shoot_chance": 720,
+        "stronger_top_row": True,
+        "strong_enemy_hp": 2,
+        "weapon_upgrade": True,
+        "description": "Weapon upgrade unlocked."
+    },
+
+    7: {
+        "enemy_rows": 3,
+        "enemy_cols": 6,
+        "enemy_speed": 0.33,
+        "enemy_hp": 1,
+        "enemy_shooting": True,
+        "shoot_chance": 700,
+        "stronger_top_row": True,
+        "strong_enemy_hp": 3,
+        "weapon_upgrade": True,
+        "description": "Purple enemies appear."
+    },
+
+    8: {
+        "enemy_rows": 3,
+        "enemy_cols": 7,
+        "enemy_speed": 0.35,
+        "enemy_hp": 1,
+        "enemy_shooting": True,
+        "shoot_chance": 650,
+        "stronger_top_row": True,
+        "strong_enemy_hp": 3,
+        "weapon_upgrade": True,
+        "description": "All enemy types combined."
+    },
+
+    9: {
+        "enemy_rows": 3,
+        "enemy_cols": 7,
+        "enemy_speed": 0.38,
+        "enemy_hp": 1,
+        "enemy_shooting": True,
+        "shoot_chance": 600,
+        "stronger_top_row": True,
+        "strong_enemy_hp": 3,
+        "weapon_upgrade": True,
+        "description": "More enemies and faster attacks."
+    },
+
+    10: {
+        "enemy_rows": 4,
+        "enemy_cols": 7,
+        "enemy_speed": 0.42,
         "enemy_hp": 1,
         "enemy_shooting": True,
         "shoot_chance": 550,
         "stronger_top_row": True,
-        "weapon_enemy": False,
-        "shield_enemy": False,
-        "forbidden_enemy": False,
-        "bonus_enemy": False,
-        "description": "Gornji red je jači, ali enemyji i dalje rijetko pucaju."
-    },
-    4: {
-        "enemy_rows": 2,
-        "enemy_cols": 5,
-        "enemy_speed": 0.27,
-        "enemy_hp": 1,
-        "enemy_shooting": True,
-        "shoot_chance": 500,
-        "stronger_top_row": True,
-        "weapon_enemy": True,
-        "shield_enemy": False,
-        "forbidden_enemy": False,
-        "bonus_enemy": False,
-        "description": "Kao treći nivo, ali sa weapon enemyjem."
-    },
-    5: {
-        "enemy_rows": 3,
-        "enemy_cols": 5,
-        "enemy_speed": 0.30,
-        "enemy_hp": 1,
-        "enemy_shooting": True,
-        "shoot_chance": 430,
-        "stronger_top_row": False,
-        "weapon_enemy": False,
-        "shield_enemy": True,
-        "forbidden_enemy": False,
-        "bonus_enemy": True,
-        "description": "Više enemyja, ali i dalje umjeren tempo."
-    },
-    6: {
-        "enemy_rows": 3,
-        "enemy_cols": 5,
-        "enemy_speed": 0.34,
-        "enemy_hp": 1,
-        "enemy_shooting": True,
-        "shoot_chance": 380,
-        "stronger_top_row": True,
-        "weapon_enemy": False,
-        "shield_enemy": True,
-        "forbidden_enemy": False,
-        "bonus_enemy": False,
-        "description": "Počinje ozbiljniji pritisak, ali još uvijek fer."
-    },
-    7: {
-        "enemy_rows": 3,
-        "enemy_cols": 6,
-        "enemy_speed": 0.38,
-        "enemy_hp": 1,
-        "enemy_shooting": True,
-        "shoot_chance": 340,
-        "stronger_top_row": True,
-        "weapon_enemy": True,
-        "shield_enemy": False,
-        "forbidden_enemy": False,
-        "bonus_enemy": False,
-        "description": "Brži tempo i novi weapon enemy."
-    },
-    8: {
-        "enemy_rows": 3,
-        "enemy_cols": 6,
-        "enemy_speed": 0.43,
-        "enemy_hp": 1,
-        "enemy_shooting": True,
-        "shoot_chance": 300,
-        "stronger_top_row": False,
-        "weapon_enemy": False,
-        "shield_enemy": True,
-        "forbidden_enemy": True,
-        "bonus_enemy": True,
-        "description": "Specijalni enemyji, ali i dalje bez previše HP-a."
-    },
-    9: {
-        "enemy_rows": 4,
-        "enemy_cols": 6,
-        "enemy_speed": 0.48,
-        "enemy_hp": 1,
-        "enemy_shooting": True,
-        "shoot_chance": 260,
-        "stronger_top_row": True,
-        "weapon_enemy": True,
-        "shield_enemy": True,
-        "forbidden_enemy": True,
-        "bonus_enemy": True,
-        "description": "Teži miks svega do sada."
-    },
-    10: {
-        "enemy_rows": 4,
-        "enemy_cols": 6,
-        "enemy_speed": 0.55,
-        "enemy_hp": 2,
-        "enemy_shooting": True,
-        "shoot_chance": 220,
-        "stronger_top_row": True,
-        "weapon_enemy": True,
-        "shield_enemy": True,
-        "forbidden_enemy": True,
-        "bonus_enemy": True,
-        "description": "Finalni nivo, ali i dalje prelazan."
-    },
+        "strong_enemy_hp": 3,
+        "weapon_upgrade": True,
+        "description": "Final challenge: all enemy types."
+    }
 }

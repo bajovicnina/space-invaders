@@ -1,4 +1,5 @@
 import pygame
+import math
 from settings import POWERUP_FALL_SPEED
 
 class PowerUp:
@@ -16,19 +17,29 @@ class PowerUp:
         self.rect.topleft = (self.x, self.y)
 
     def draw(self, screen):
+        pulse = int(math.sin(pygame.time.get_ticks() / 180) * 2)
         glow = pygame.Surface((44, 44), pygame.SRCALPHA)
 
         if self.power_type == "shield":
-            pygame.draw.circle(glow, (80, 180, 255, 70), (22, 22), 20)
+            pygame.draw.circle(glow, (80, 180, 255, 70), (22, 22), 20 + pulse)
             screen.blit(glow, (self.x - 8, self.y - 8))
-            pygame.draw.circle(screen, (120, 220, 255), self.rect.center, 12)
-            pygame.draw.circle(screen, (255, 255, 255), self.rect.center, 6)
+            pygame.draw.circle(screen, (120, 230, 255), self.rect.center, 12, 2)
+            pygame.draw.circle(screen, (200, 255, 255), self.rect.center, 8, 1)
 
         elif self.power_type == "weapon":
-            pygame.draw.circle(glow, (255, 220, 90, 70), (22, 22), 20)
+            pygame.draw.circle(glow, (255, 220, 90, 70), (22, 22), 20 + pulse)
             screen.blit(glow, (self.x - 8, self.y - 8))
-            pygame.draw.rect(screen, (255, 220, 90), self.rect, border_radius=8)
-            pygame.draw.rect(screen, (255, 255, 255), (self.x + 9, self.y + 5, 10, 18), border_radius=4)
+            center = self.rect.center
+            points = [
+                (center[0], center[1] - 10),
+                (center[0] - 5, center[1]),
+                (center[0] + 1, center[1]),
+                (center[0] - 4, center[1] + 10),
+                (center[0] + 7, center[1] - 2),
+                (center[0] + 1, center[1] - 2),
+            ]
+
+            pygame.draw.polygon(screen, (220, 120, 255), points)
 
     def is_off_screen(self, height):
         return self.y > height

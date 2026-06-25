@@ -19,12 +19,13 @@ RED = (220, 60, 60)
 GREEN = (80, 220, 120)
 BLUE = (90, 170, 255)
 YELLOW = (255, 220, 90)
+PURPLE = (160, 80, 255)
 
-SHIELD_DURATION = 5000   # 5 sekundi u milisekundama
+SHIELD_DURATION = 7000   # 5 sekundi u milisekundama
 POWERUP_FALL_SPEED = 3
 
-ENEMY_BULLET_SPEED = 3
-ENEMY_SHOOT_CHANCE = 200   # manji broj = češće pucaju
+ENEMY_BULLET_SPEED = 2
+ENEMY_SHOOT_CHANCE = 600   # manji broj = češće pucaju
 
 # COLORS
 WHITE = (255, 255, 255)

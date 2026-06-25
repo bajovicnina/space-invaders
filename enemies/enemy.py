@@ -1,5 +1,7 @@
 import pygame
 from settings import RED
+from core.assets import get_image
+
 
 class Enemy:
     def __init__(self, x, y, speed, color=RED, hp=1, points=10, enemy_type="normal"):
@@ -12,23 +14,35 @@ class Enemy:
         self.points = points
         self.enemy_type = enemy_type
 
-        # bira sliku po tipu enemyja
-        if self.enemy_type == "strong":
-            self.image = pygame.image.load("assets/images/enemy2.png").convert_alpha()
-            self.image = pygame.transform.smoothscale(self.image, (110, 80))
+        if self.enemy_type == "elite":
+            self.image = get_image("enemy_elite")
+
+        elif self.enemy_type == "strong":
+            self.image = get_image("enemy_strong")
+
+        elif self.enemy_type == "yellow":
+            self.image = get_image("enemy_strong")
+
         else:
-            self.image = pygame.image.load("assets/images/green_alien.png").convert_alpha()
-            self.image = pygame.transform.smoothscale(self.image, (110, 80))
+            self.image = get_image("enemy_normal")
 
         self.width = self.image.get_width()
         self.height = self.image.get_height()
 
-        # manji hitbox da bolje odgovara alienu
-        self.rect = pygame.Rect(self.x + 12, self.y + 10, self.width - 24, self.height - 20)
+        self.rect = pygame.Rect(
+            self.x + 6,
+            self.y + 6,
+            self.width - 12,
+            self.height - 12
+        )
 
-    def move(self):
-        self.y += self.speed
-        self.rect.topleft = (self.x + 12, self.y + 10)
+    def move(self, direction):
+        self.x += self.speed * direction
+        self.rect.topleft = (self.x + 6, self.y + 6)
+
+    def step_down(self, amount):
+        self.y += amount
+        self.rect.topleft = (self.x + 6, self.y + 6)
 
     def hit(self):
         self.hp -= 1
@@ -37,27 +51,32 @@ class Enemy:
     def draw(self, screen):
         screen.blit(self.image, (self.x, self.y))
 
-        # HP bar za enemyje koji se gadjaju vise puta
+        # Health bar za enemy koji ima više od 1 HP
         if self.max_hp > 1:
-            bar_width = self.width
-            bar_height = 8
-            fill_width = int((self.hp / self.max_hp) * bar_width)
+            bar_width = 24
+            bar_height = 3
+            bar_x = self.x + (self.width - bar_width) // 2
+            bar_y = self.y + 6
 
-            pygame.draw.rect(screen, (60, 60, 60), (self.x, self.y - 12, bar_width, bar_height))
-            pygame.draw.rect(screen, (180, 80, 255), (self.x, self.y - 12, fill_width, bar_height))
+            # pozadina
+            pygame.draw.rect(
+                screen,
+                (50, 50, 50),
+                (bar_x, bar_y, bar_width, bar_height),
+                border_radius=2
+            )
 
-        # highlight za specijalne enemyje
-        if self.enemy_type == "weapon":
-            pygame.draw.rect(screen, (255, 220, 80), (self.x, self.y, self.width, self.height), 3)
+            # boja zavisi od enemy-ja
+            if self.enemy_type in ("strong", "yellow"):
+                color = (255, 220, 0)      # žuta
+            else:
+                color = (180, 80, 255)     # ljubičasta
 
-        elif self.enemy_type == "shield":
-            pygame.draw.rect(screen, (80, 200, 255), (self.x, self.y, self.width, self.height), 3)
+            current_width = int(bar_width * (self.hp / self.max_hp))
 
-        elif self.enemy_type == "bonus":
-            pygame.draw.rect(screen, (255, 150, 255), (self.x, self.y, self.width, self.height), 3)
-
-        elif self.enemy_type == "forbidden":
-            pygame.draw.rect(screen, (255, 80, 80), (self.x, self.y, self.width, self.height), 3)
-
-        elif self.enemy_type == "strong":
-            pygame.draw.rect(screen, (170, 100, 255), (self.x, self.y, self.width, self.height), 3)
+            pygame.draw.rect(
+                screen,
+                color,
+                (bar_x, bar_y, current_width, bar_height),
+                border_radius=2
+            )

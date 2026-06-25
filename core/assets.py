@@ -1,41 +1,55 @@
 import pygame
-from settings import WIDTH, HEIGHT, ENEMY_WIDTH, ENEMY_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT
+from settings import WIDTH, HEIGHT
+
+# putanje
+_PLAYER_PATH = "assets/images/playerr.png"
+_ENEMY_PATH = "assets/images/green_alien.png"
+_BG_PATH = "assets/images/bg5.png"
+_STRONG_ENEMY_PATH = "assets/images/yellow_alien.png"
+_ELITE_ENEMY_PATH = "assets/images/purple_alien.png"
+
+# cache za slike i fontove
+_images = {}
+_fonts = {}
 
 
-BACKGROUND_PATH = 'assets/images/background3.jpg'
-PLAYER_PATH = 'assets/images/player1.png'
-ENEMY_PATH = 'assets/images/alien4.png'
+def get_image(key):
+    return _images.get(key)
 
 
-def load_scaled_image(path: str, size: tuple[int, int], alpha: bool = True) -> pygame.Surface:
-    image = pygame.image.load(path)
-    image = image.convert_alpha() if alpha else image.convert()
-    return pygame.transform.scale(image, size)
+def get_font(path, size):
+    key = (path, size)
+    if key not in _fonts:
+        _fonts[key] = pygame.font.Font(path, size)
+    return _fonts[key]
 
 
-def tint_image(image: pygame.Surface, color: tuple[int, int, int], alpha: int = 80) -> pygame.Surface:
-    tinted = image.copy()
-    overlay = pygame.Surface(image.get_size(), pygame.SRCALPHA)
-    overlay.fill((color[0], color[1], color[2], alpha))
-    tinted.blit(overlay, (0, 0), special_flags=pygame.BLEND_RGBA_ADD)
-    return tinted
+def load_all():
+    """Pozovi jednom na početku igre, nakon pygame.init() i pygame.display.set_mode()"""
 
+    # player
+    img = pygame.image.load(_PLAYER_PATH).convert_alpha()
+    _images["player"] = pygame.transform.smoothscale(img, (200, 150))
 
-def load_background() -> pygame.Surface:
-    return load_scaled_image(BACKGROUND_PATH, (WIDTH, HEIGHT), alpha=False)
+    # enemy — normalna verzija
+    base = pygame.image.load(_ENEMY_PATH).convert_alpha()
+    base = pygame.transform.smoothscale(base, (125, 90))
+    _images["enemy_normal"] = base
 
+    # enemy — strong verzija
+    strong = pygame.image.load(_STRONG_ENEMY_PATH).convert_alpha()
+    strong = pygame.transform.smoothscale(strong, (125, 90))
+    _images["enemy_strong"] = strong
 
-def load_player_image() -> pygame.Surface:
-    return load_scaled_image(PLAYER_PATH, (PLAYER_WIDTH, PLAYER_HEIGHT))
+    # enemy — elite verzija
+    elite = pygame.image.load(_ELITE_ENEMY_PATH).convert_alpha()
+    elite = pygame.transform.smoothscale(elite, (125, 90))
+    _images["enemy_elite"] = elite
 
-
-def load_enemy_images() -> dict[str, pygame.Surface]:
-    basic = load_scaled_image(ENEMY_PATH, (ENEMY_WIDTH, ENEMY_HEIGHT))
-    medium = tint_image(basic, (80, 120, 255), 70)
-    strong = tint_image(basic, (180, 80, 255), 90)
-
-    return {
-        'basic': basic,
-        'medium': medium,
-        'strong': strong,
-    }
+    # pozadina
+    bg = pygame.image.load(_BG_PATH).convert()
+    scale_ratio = min(WIDTH / bg.get_width(), HEIGHT / bg.get_height())
+    new_w = int(bg.get_width() * scale_ratio)
+    new_h = int(bg.get_height() * scale_ratio)
+    _images["bg"] = pygame.transform.smoothscale(bg, (new_w, new_h))
+    _images["bg_size"] = (new_w, new_h)

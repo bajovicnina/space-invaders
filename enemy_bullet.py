@@ -15,10 +15,33 @@ class EnemyBullet:
         self.rect.topleft = (self.x, self.y)
 
     def draw(self, screen):
-        glow = pygame.Surface((16, 28), pygame.SRCALPHA)
-        pygame.draw.rect(glow, (255, 80, 80, 80), (0, 0, 16, 28), border_radius=6)
-        screen.blit(glow, (self.x - 5, self.y - 5))
-        pygame.draw.rect(screen, (255, 120, 120), self.rect, border_radius=3)
+        glow_surface = pygame.Surface(
+            (self.width + 12, self.height + 12),
+            pygame.SRCALPHA
+        )
+
+        pygame.draw.rect(
+            glow_surface,
+            (255, 0, 0, 60),
+            (0, 0, self.width + 12, self.height + 12),
+            border_radius=6
+        )
+
+        pygame.draw.rect(
+            glow_surface,
+            (255, 80, 80, 120),
+            (3, 3, self.width + 6, self.height + 6),
+            border_radius=4
+        )
+
+        pygame.draw.rect(
+            glow_surface,
+            (255, 255, 255),
+            (6, 6, self.width, self.height),
+            border_radius=3
+        )
+
+        screen.blit(glow_surface, (self.x - 6, self.y - 6))
 
     def is_off_screen(self, height):
         return self.y > height

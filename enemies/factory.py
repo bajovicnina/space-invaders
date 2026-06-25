@@ -1,6 +1,7 @@
 from enemies.enemy import Enemy
 from levels import LEVELS
-from settings import RED, WHITE, YELLOW, BLUE
+from settings import RED, YELLOW, PURPLE
+
 
 def create_enemies(level):
     config = LEVELS[level]
@@ -10,12 +11,14 @@ def create_enemies(level):
     cols = config["enemy_cols"]
     speed = config["enemy_speed"]
     base_hp = config["enemy_hp"]
-    spacing_x = 90
-    spacing_y = 85
+
+    spacing_x = 85
+    spacing_y = 65
     start_x = 80
-    start_y = 50
+    start_y = 75
 
     stronger_top_row = config.get("stronger_top_row", False)
+    strong_enemy_hp = config.get("strong_enemy_hp", 2)
 
     for row in range(rows):
         for col in range(cols):
@@ -23,31 +26,67 @@ def create_enemies(level):
             y = start_y + row * spacing_y
 
             hp = base_hp
-            if stronger_top_row and row == 0:
-                hp = base_hp + 1
+            enemy_type = "normal"
+            color = RED
+            points = 10
+
+            if level <= 2:
+                color = RED
+                enemy_type = "normal"
+                hp = 1
+                points = 10
+
+            elif level in [3, 4]:
+                if row == 0:
+                    color = YELLOW
+                    enemy_type = "yellow"
+                    hp = 2
+                    points = 20
+                else:
+                    color = RED
+                    enemy_type = "normal"
+                    hp = 1
+                    points = 10
+
+            elif level in [5, 6]:
+                if stronger_top_row and row == 0:
+                    color = YELLOW
+                    enemy_type = "strong"
+                    hp = 2
+                    points = 25
+                else:
+                    color = RED
+                    enemy_type = "normal"
+                    hp = 1
+                    points = 10
+
+            else:
+                if row == 0:
+                    color = PURPLE
+                    enemy_type = "elite"
+                    hp = 2
+                    points = 30
+                elif row == 1:
+                    color = YELLOW
+                    enemy_type = "yellow"
+                    hp = 2
+                    points = 20
+                else:
+                    color = RED
+                    enemy_type = "normal"
+                    hp = 1
+                    points = 10
 
             enemies.append(
-                Enemy(x, y, speed, color=RED, hp=hp, points=10, enemy_type="normal")
+                Enemy(
+                    x,
+                    y,
+                    speed,
+                    color=color,
+                    hp=hp,
+                    points=points,
+                    enemy_type=enemy_type
+                )
             )
-
-    if config.get("weapon_enemy", False):
-        enemies.append(
-            Enemy(70, 30, speed + 0.35, color=YELLOW, hp=2, points=30, enemy_type="weapon")
-        )
-
-    if config.get("shield_enemy", False):
-        enemies.append(
-            Enemy(620, 30, speed + 0.30, color=BLUE, hp=2, points=20, enemy_type="shield")
-        )
-
-    if config.get("bonus_enemy", False):
-        enemies.append(
-            Enemy(50, 30, speed + 0.4, color=YELLOW, hp=1, points=50, enemy_type="bonus")
-        )
-
-    if config.get("forbidden_enemy", False):
-        enemies.append(
-            Enemy(650, 30, speed + 0.2, color=WHITE, hp=1, points=0, enemy_type="forbidden")
-        )
 
     return enemies
